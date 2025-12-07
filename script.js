@@ -20,11 +20,24 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ================= PLACE ORDER =================
+/* ================= PRODUCT AUTO SELECT ================= */
+// 👉 Product card lo "Buy Now" click chesthe idi call avvali
+window.selectProduct = function (productName) {
+  document.getElementById("product").value = productName;
+  document.getElementById("showProduct").innerText = productName;
+
+  // smooth scroll to order form
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth"
+  });
+};
+
+/* ================= PLACE ORDER ================= */
 window.placeOrder = async function () {
   const name = document.getElementById("name").value;
   const mobile = document.getElementById("mobile").value;
-  const product = document.getElementById("product").value;
+  const product = document.getElementById("product").value; // auto-set
   const address = document.getElementById("address").value;
   const payment = document.getElementById("payment").value;
   const txn = document.getElementById("txn").value;
