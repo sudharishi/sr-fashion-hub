@@ -1,10 +1,18 @@
-// ✅ Firebase CDN imports
+// ✅ Firebase core
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+
+// ✅ Firestore
 import {
   getFirestore,
   collection,
   addDoc
 } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+// ✅ Firebase Auth
+import {
+  getAuth,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 // ✅ Firebase config
 const firebaseConfig = {
@@ -19,14 +27,45 @@ const firebaseConfig = {
 // ✅ Init Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
+
+/* ================= ADMIN LOGIN ================= */
+function adminLogin() {
+  const email = document.getElementById("adminEmail")?.value.trim();
+  const password = document.getElementById("adminPassword")?.value.trim();
+
+  if (!email || !password) {
+    alert("Email & Password required ❗");
+    return;
+  }
+
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      alert("Admin Login Successful ✅");
+      window.location.href = "admin-dashboard.html";
+    })
+    .catch((error) => {
+      alert("Login Failed ❌");
+      console.error(error.message);
+    });
+}
+
+/* ✅ FIX: button click work avvadaniki */
+document.addEventListener("DOMContentLoaded", () => {
+  const loginBtn = document.getElementById("loginBtn");
+  if (loginBtn) {
+    loginBtn.addEventListener("click", adminLogin);
+  }
+});
 
 /* ================= PRODUCT AUTO SELECT ================= */
-// 👉 Product card lo "Buy Now" click chesthe idi call avvali
 window.selectProduct = function (productName) {
-  document.getElementById("product").value = productName;
-  document.getElementById("showProduct").innerText = productName;
+  const p = document.getElementById("product");
+  const s = document.getElementById("showProduct");
 
-  // smooth scroll to order form
+  if (p) p.value = productName;
+  if (s) s.innerText = productName;
+
   window.scrollTo({
     top: document.body.scrollHeight,
     behavior: "smooth"
@@ -35,12 +74,12 @@ window.selectProduct = function (productName) {
 
 /* ================= PLACE ORDER ================= */
 window.placeOrder = async function () {
-  const name = document.getElementById("name").value;
-  const mobile = document.getElementById("mobile").value;
-  const product = document.getElementById("product").value; // auto-set
-  const address = document.getElementById("address").value;
-  const payment = document.getElementById("payment").value;
-  const txn = document.getElementById("txn").value;
+  const name = document.getElementById("name")?.value;
+  const mobile = document.getElementById("mobile")?.value;
+  const product = document.getElementById("product")?.value;
+  const address = document.getElementById("address")?.value;
+  const payment = document.getElementById("payment")?.value;
+  const txn = document.getElementById("txn")?.value || "";
 
   if (!name || !mobile || !product || !address || !payment) {
     alert("All fields required ❗");
@@ -66,10 +105,9 @@ window.placeOrder = async function () {
 
     alert("Order placed successfully ✅");
 
-    // ✅ WhatsApp Alert
+    // ✅ WhatsApp admin alert
     const msg = `
 🛍️ New Order - SR FASHION HUB
-
 Name: ${name}
 Product: ${product}
 Mobile: ${mobile}
