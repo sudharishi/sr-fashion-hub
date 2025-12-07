@@ -2,7 +2,18 @@
 <input id="mobile" placeholder="Mobile Number">
 <input id="product" placeholder="Product Name">
 <textarea id="address" placeholder="Address"></textarea>
-<input id="txn" placeholder="Transaction ID">
+
+<!-- ✅ PAYMENT METHOD -->
+<select id="payment">
+  <option value="">Select Payment Method</option>
+  <option value="COD">Cash on Delivery</option>
+  <option value="UPI">UPI</option>
+</select>
+
+<!-- ✅ UPI INFO -->
+<p><b>UPI ID:</b> 9966016696@ybl</p>
+
+<input id="txn" placeholder="UPI Transaction ID (only for UPI)">
 
 <button onclick="placeOrder()">Confirm Order</button>
 
