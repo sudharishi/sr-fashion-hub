@@ -1,20 +1,82 @@
-<input id="name" placeholder="Your Name">
-<input id="mobile" placeholder="Mobile Number">
-<input id="product" placeholder="Product Name">
-<textarea id="address" placeholder="Address"></textarea>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SR Fashion Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 15px;
+      max-width: 400px;
+      margin: auto;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    .product-card {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
 
-<!-- ✅ PAYMENT METHOD -->
-<select id="payment">
-  <option value="">Select Payment Method</option>
-  <option value="COD">Cash on Delivery</option>
-  <option value="UPI">UPI</option>
-</select>
+  <h2>SR Fashion Hub</h2>
 
-<!-- ✅ UPI INFO -->
-<p><b>UPI ID:</b> 9966016696@ybl</p>
+  <!-- ✅ PRODUCT CARD -->
+  <div class="product-card">
+    <h3>Bluetooth Speaker</h3>
+    <p>Price: ₹999</p>
+    <button onclick="selectProduct('Bluetooth Speaker')">Buy Now</button>
+  </div>
 
-<input id="txn" placeholder="UPI Transaction ID (only for UPI)">
+  <!-- ✅ ORDER FORM -->
+  <h3>Order Details</h3>
 
-<button onclick="placeOrder()">Confirm Order</button>
+  <input id="name" placeholder="Your Name">
+  <input id="mobile" placeholder="Mobile Number">
 
-<script type="module" src="script.js"></script>
+  <!-- ✅ PRODUCT AUTO SET -->
+  <input id="product" type="hidden">
+  <p><b>Selected Product:</b> <span id="showProduct">None</span></p>
+
+  <textarea id="address" placeholder="Address"></textarea>
+
+  <!-- ✅ PAYMENT -->
+  <select id="payment">
+    <option value="">Select Payment Method</option>
+    <option value="COD">Cash on Delivery</option>
+    <option value="UPI">UPI</option>
+  </select>
+
+  <p><b>UPI ID:</b> 9966016696@ybl</p>
+
+  <input id="txn" placeholder="UPI Transaction ID (only for UPI)">
+
+  <button onclick="placeOrder()">Confirm Order</button>
+
+  <!-- ✅ SCRIPT -->
+  <script type="module" src="script.js"></script>
+
+  <!-- ✅ PRODUCT SELECT FUNCTION -->
+  <script>
+    function selectProduct(productName) {
+      document.getElementById("product").value = productName;
+      document.getElementById("showProduct").innerText = productName;
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  </script>
+
+</body>
+</html>
